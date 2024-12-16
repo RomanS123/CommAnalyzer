@@ -256,7 +256,6 @@ class MainWindow(QMainWindow):
 
             sentiments_scores = []
             hidden_states = []
-            print(len(translated_comments))
             for i, comment in enumerate(translated_comments, start=1):
                 input_tensor = analyzer.preprocess(
                     comment).unsqueeze(0).to(analyzer.device)
@@ -276,9 +275,7 @@ class MainWindow(QMainWindow):
             # Filter None scores and hidden states
             sentiments_scores = [x for x in sentiments_scores if x is not None]
 
-            print(len(hidden_states))
             hidden_states = np.array(hidden_states)
-            print(hidden_states.shape)
 
             # Sentiment Classification
             sentiments = [1 if score >=

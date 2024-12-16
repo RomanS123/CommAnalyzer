@@ -49,7 +49,6 @@ class YouTubeAPI:
             except Exception as e:
                 print(f"Error: {e}")
                 break
-        print(comments)
         return comments
 
     @staticmethod
