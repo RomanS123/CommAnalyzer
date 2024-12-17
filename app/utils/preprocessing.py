@@ -3,7 +3,7 @@ import re
 import nltk
 
 nltk.download('punkt_tab')
-
+import string
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 from nltk.stem.wordnet import WordNetLemmatizer
@@ -18,7 +18,7 @@ def rm_link(text):
 # become "shut up okay Im only 10 years old"
 def rm_punct2(text):
     # return re.sub(r'[\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~]', ' ', text)
-    return re.sub(r'[\"\#\$\%\&\'\(\)\*\+\/\:\;\<\=\>\@\[\\\]\^\_\`\{\|\}\~]', ' ', text)
+    return re.sub(f"[{re.escape(string.punctuation)}]", " ", text)
 
 def rm_html(text):
     return re.sub(r'<[^>]+>', '', text)
@@ -85,3 +85,5 @@ def preprocess_pipeline(text):
     no_stopwords = rm_stopwords(tokens)
     lemmas = lemmatize(no_stopwords)
     return ' '.join(lemmas)
+
+print(space_bt_punct("Hello, world!"))

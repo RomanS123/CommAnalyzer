@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import nltk
 import json
-from utils import clean_pipeline, preprocess_pipeline
+from .utils import clean_pipeline, preprocess_pipeline
 import os
 
 

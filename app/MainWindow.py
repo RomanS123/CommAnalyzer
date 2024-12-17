@@ -21,10 +21,10 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QFont, QFontDatabase, QIcon
 import os
 import json
-from youtube_api import YouTubeAPI
+from app.youtube_api import YouTubeAPI
 from googletrans import Translator
 from langdetect import detect, detect_langs
-from SentimentClassfier import SentimentClassifier
+from app.SentimentClassfier import SentimentClassifier
 import matplotlib.pyplot as plt
 from sklearn.decomposition import PCA
 import torch
@@ -256,6 +256,7 @@ class MainWindow(QMainWindow):
 
             sentiments_scores = []
             hidden_states = []
+            print(len(translated_comments))
             for i, comment in enumerate(translated_comments, start=1):
                 input_tensor = analyzer.preprocess(
                     comment).unsqueeze(0).to(analyzer.device)
@@ -275,7 +276,9 @@ class MainWindow(QMainWindow):
             # Filter None scores and hidden states
             sentiments_scores = [x for x in sentiments_scores if x is not None]
 
+            print(len(hidden_states))
             hidden_states = np.array(hidden_states)
+            print(hidden_states.shape)
 
             # Sentiment Classification
             sentiments = [1 if score >=
@@ -371,10 +374,3 @@ class SettingsDialog(QDialog):
 
         QMessageBox.information(self, "Success", "API Key saved successfully.")
         self.accept()
-
-
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainWindow()
-    window.show()
-    sys.exit(app.exec_())
